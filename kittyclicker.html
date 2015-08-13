@@ -1,0 +1,603 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="main.css" rel="stylesheet">
+    <title>Kitty Clicker - Click Cute Kittys</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+
+    //Sound einstellen
+    var SoundOnOrOff = "On";
+    
+    function ToogleSound()
+    {
+        if (SoundOnOrOff == "On")
+        {
+            SoundOnOrOff = "Off";
+        } else {
+            SoundOnOrOff = "On";
+        }
+    }
+    
+    //Save&Load Funktionen
+    function SaveGame()
+    {
+        localStorage.TotalKittys = document.getElementById('KittysCurrent').innerHTML;
+        localStorage.KpS = document.getElementById('KittysPerSec').innerHTML;
+
+        localStorage.ItemSoftHandCurr = document.getElementById('ItemSoftHandCurrent').innerHTML;
+        localStorage.ItemSoftHandNext = document.getElementById('ItemSoftHandNext').innerHTML;
+        localStorage.ItemFeedingBowlCurr = document.getElementById('ItemFeedingBowlCurrent').innerHTML;
+        localStorage.ItemFeedingBowlNext = document.getElementById('ItemFeedingBowlNext').innerHTML;
+        localStorage.ItemWoolBallCurr = document.getElementById('ItemWoolBallCurrent').innerHTML;
+        localStorage.ItemWoolBallNext = document.getElementById('ItemWoolBallNext').innerHTML;
+        localStorage.ItemLitterBoxCurr = document.getElementById('ItemLitterBoxCurrent').innerHTML;
+        localStorage.ItemLitterBoxNext = document.getElementById('ItemLitterBoxNext').innerHTML;
+        localStorage.ItemCatTreeCurr = document.getElementById('ItemCatTreeCurrent').innerHTML;
+        localStorage.ItemCatTreeNext = document.getElementById('ItemCatTreeNext').innerHTML;
+        localStorage.ItemCatGrassCurr = document.getElementById('ItemCatGrassCurrent').innerHTML;
+        localStorage.ItemCatGrassNext = document.getElementById('ItemCatGrassNext').innerHTML;
+        localStorage.ItemFishingPoleCurr = document.getElementById('ItemFishingPoleCurrent').innerHTML;
+        localStorage.ItemFishingPoleNext = document.getElementById('ItemFishingPoleNext').innerHTML;
+        localStorage.ItemBirdCageCurr = document.getElementById('ItemBirdCageCurrent').innerHTML;
+        localStorage.ItemBirdCageNext = document.getElementById('ItemBirdCageNext').innerHTML;
+        localStorage.ItemFreshFishCurr = document.getElementById('ItemFreshFishCurrent').innerHTML;
+        localStorage.ItemFreshFishNext = document.getElementById('ItemFreshFishNext').innerHTML;
+        localStorage.ItemLaserpointerCurr = document.getElementById('ItemLaserpointerCurrent').innerHTML;
+        localStorage.ItemLaserpointerNext = document.getElementById('ItemLaserpointerNext').innerHTML;
+        
+        localStorage.SoundState = SoundOnOrOff;
+            
+        alert('Game saved!');
+    }
+    
+    function LoadGame()
+    {
+        document.getElementById('KittysCurrent').innerHTML = localStorage.TotalKittys;
+        document.getElementById('KittysPerSec').innerHTML = localStorage.KpS;
+        document.getElementById('ItemSoftHandCurrent').innerHTML = localStorage.ItemSoftHandCurr;
+        document.getElementById('ItemSoftHandNext').innerHTML = localStorage.ItemSoftHandNext;
+        document.getElementById('ItemFeedingBowlCurrent').innerHTML = localStorage.ItemFeedingBowlCurr;
+        document.getElementById('ItemFeedingBowlNext').innerHTML = localStorage.ItemFeedingBowlNext;
+        document.getElementById('ItemWoolBallCurrent').innerHTML = localStorage.ItemWoolBallCurr;
+        document.getElementById('ItemWoolBallNext').innerHTML = localStorage.ItemWoolBallNext;        
+        document.getElementById('ItemLitterBoxCurrent').innerHTML = localStorage.ItemLitterBoxCurr;
+        document.getElementById('ItemLitterBoxNext').innerHTML = localStorage.ItemLitterBoxNext;
+        document.getElementById('ItemCatTreeCurrent').innerHTML = localStorage.ItemCatTreeCurr;
+        document.getElementById('ItemCatTreeNext').innerHTML = localStorage.ItemCatTreeNext;
+        document.getElementById('ItemCatGrassCurrent').innerHTML = localStorage.ItemCatGrassCurr;
+        document.getElementById('ItemCatGrassNext').innerHTML = localStorage.ItemCatGrassNext;
+        document.getElementById('ItemFishingPoleCurrent').innerHTML = localStorage.ItemFishingPoleCurr;
+        document.getElementById('ItemFishingPoleNext').innerHTML = localStorage.ItemFishingPoleNext;
+        document.getElementById('ItemBirdCageCurrent').innerHTML = localStorage.ItemBirdCageCurr;
+        document.getElementById('ItemBirdCageNext').innerHTML = localStorage.ItemBirdCageNext;
+        document.getElementById('ItemFreshFishCurrent').innerHTML = localStorage.ItemFreshFishCurr;
+        document.getElementById('ItemFreshFishNext').innerHTML = localStorage.ItemFreshFishNext;
+        document.getElementById('ItemLaserpointerCurrent').innerHTML = localStorage.ItemLaserpointerCurr;
+        document.getElementById('ItemLaserpointerNext').innerHTML = localStorage.ItemLaserpointerNext;
+        
+        SoundOnOrOff = localStorage.SoundState;
+              
+        alert('Game restored!');
+    }
+    
+        
+    //Timer für KpS
+    var tmrKpSStart=setInterval(function(){tmrTick()},100);    
+    
+    function tmrTick()
+    {
+        var kittyPerSecond = (parseFloat(document.getElementById('ItemSoftHandCurrent').innerHTML) * ItemSoftHandKpS) + 
+        (parseFloat(document.getElementById('ItemFeedingBowlCurrent').innerHTML) * ItemFeedingBowlKpS) +
+        (parseFloat(document.getElementById('ItemWoolBallCurrent').innerHTML) * ItemWoolBallKpS) + 
+        (parseFloat(document.getElementById('ItemLitterBoxCurrent').innerHTML) * ItemLitterBoxKpS) + 
+        (parseFloat(document.getElementById('ItemCatTreeCurrent').innerHTML) * ItemCatTreeKpS) + 
+        (parseFloat(document.getElementById('ItemCatGrassCurrent').innerHTML) * ItemCatGrassKpS) + 
+        (parseFloat(document.getElementById('ItemFishingPoleCurrent').innerHTML) * ItemFishingPoleKpS) + 
+        (parseFloat(document.getElementById('ItemBirdCageCurrent').innerHTML) * ItemBirdCageKpS) + 
+        (parseFloat(document.getElementById('ItemFreshFishCurrent').innerHTML) * ItemFreshFishKpS) + 
+        (parseFloat(document.getElementById('ItemLaserpointerCurrent').innerHTML) * ItemLaserpointerKpS);
+        
+        document.getElementById('KittysPerSec').innerHTML = kittyPerSecond.toFixed(2); 
+               
+        var kittyCurrent = parseFloat(document.getElementById('KittysCurrent').innerHTML) + (parseFloat(document.getElementById('KittysPerSec').innerHTML) / 10);
+        document.getElementById('KittysCurrent').innerHTML = kittyCurrent.toFixed(2);
+    }
+    
+    var tmrUpgradeCheck=setInterval(function(){tmrUpgradeCheckTick()}, 100);
+    
+    function tmrUpgradeCheckTick()
+    {
+      
+    }
+    
+       
+    //Klick auf Kitty
+    
+    var clickSound = new Audio('/kcsound/cat5.mp3');
+
+
+    function kittyClick()
+    {     
+        var kittysTotal = parseFloat(document.getElementById('KittysCurrent').innerHTML);
+        kittysTotal = kittysTotal + 1;
+        document.getElementById('KittysCurrent').innerHTML = kittysTotal;
+        
+        if (SoundOnOrOff == "On")
+        {
+            clickSound.play();
+        }
+    }
+
+
+    //Funktionen für Itemkauf
+    
+    var ItemSoftHandKpS = 0.1;
+    function itemSoftHandClick()
+    {
+        var kittysTotal = parseFloat(document.getElementById('KittysCurrent').innerHTML);
+        var SoftHandsCurrent = parseFloat(document.getElementById('ItemSoftHandCurrent').innerHTML);
+        var baseCost = parseFloat('15');
+        var PurchasePrice = parseFloat('0');
+        PurchasePrice = Math.round(baseCost * Math.pow(1.15, SoftHandsCurrent));
+        
+        if (kittysTotal >= PurchasePrice)
+        {
+            kittysTotal = kittysTotal - PurchasePrice;
+            document.getElementById('ItemSoftHandCurrent').innerHTML = SoftHandsCurrent + 1;
+            document.getElementById('KittysCurrent').innerHTML = kittysTotal.toFixed(2);
+            document.getElementById('ItemSoftHandNext').innerHTML = Math.round(baseCost * Math.pow(1.15, SoftHandsCurrent));        
+        }
+        else
+        {
+            
+        }  
+    }
+    var ItemFeedingBowlKpS = 0.5;    
+    function itemFeedingBowlClick()
+    {
+        var kittysTotal = parseFloat(document.getElementById('KittysCurrent').innerHTML);
+        var FeedingBowlsCurrent = parseFloat(document.getElementById('ItemFeedingBowlCurrent').innerHTML);
+        var baseCost = parseFloat('100');
+        var PurchasePrice = parseFloat('0');
+        PurchasePrice = Math.round(baseCost * Math.pow(1.15, FeedingBowlsCurrent));
+        
+        if (kittysTotal >= PurchasePrice)
+        {
+            kittysTotal = kittysTotal - PurchasePrice;
+            document.getElementById('ItemFeedingBowlCurrent').innerHTML = FeedingBowlsCurrent + 1;
+            document.getElementById('KittysCurrent').innerHTML = kittysTotal.toFixed(2);
+            document.getElementById('ItemFeedingBowlNext').innerHTML = Math.round(baseCost * Math.pow(1.15, FeedingBowlsCurrent));        
+        }
+        else
+        {
+            
+        }  
+    }
+    var ItemWoolBallKpS = 4;
+    function itemWoolBallClick()
+    {
+        var kittysTotal = parseFloat(document.getElementById('KittysCurrent').innerHTML);
+        var WoolBallsCurrent = parseFloat(document.getElementById('ItemWoolBallCurrent').innerHTML);
+        var baseCost = parseFloat('500');
+        var PurchasePrice = parseFloat('0');
+        PurchasePrice = Math.round(baseCost * Math.pow(1.15, WoolBallsCurrent));
+        
+        if (kittysTotal >= PurchasePrice)
+        {
+            kittysTotal = kittysTotal - PurchasePrice;
+            document.getElementById('ItemWoolBallCurrent').innerHTML = WoolBallsCurrent + 1;
+            document.getElementById('KittysCurrent').innerHTML = kittysTotal.toFixed(2);
+            document.getElementById('ItemWoolBallNext').innerHTML = Math.round(baseCost * Math.pow(1.15, WoolBallsCurrent));        
+        }
+        else
+        {
+            
+        }  
+    }
+    var ItemLitterBoxKpS = 10;
+    function itemLitterBoxClick()
+    {
+        var kittysTotal = parseFloat(document.getElementById('KittysCurrent').innerHTML);
+        var LitterBoxsCurrent = parseFloat(document.getElementById('ItemLitterBoxCurrent').innerHTML);
+        var baseCost = parseFloat('3000');
+        var PurchasePrice = parseFloat('0');
+        PurchasePrice = Math.round(baseCost * Math.pow(1.15, LitterBoxsCurrent));
+        
+        if (kittysTotal >= PurchasePrice)
+        {
+            kittysTotal = kittysTotal - PurchasePrice;
+            document.getElementById('ItemLitterBoxCurrent').innerHTML = LitterBoxsCurrent + 1;
+            document.getElementById('KittysCurrent').innerHTML = kittysTotal.toFixed(2);
+            document.getElementById('ItemLitterBoxNext').innerHTML = Math.round(baseCost * Math.pow(1.15, LitterBoxsCurrent));        
+        }
+        else
+        {
+            
+        }  
+    }
+    var ItemCatTreeKpS = 40;
+    function itemCatTreeClick()
+    {
+        var kittysTotal = parseFloat(document.getElementById('KittysCurrent').innerHTML);
+        var CatTreesCurrent = parseFloat(document.getElementById('ItemCatTreeCurrent').innerHTML);
+        var baseCost = parseFloat('10000');
+        var PurchasePrice = parseFloat('0');
+        PurchasePrice = Math.round(baseCost * Math.pow(1.15, CatTreesCurrent));
+        
+        if (kittysTotal >= PurchasePrice)
+        {
+            kittysTotal = kittysTotal - PurchasePrice;
+            document.getElementById('ItemCatTreeCurrent').innerHTML = CatTreesCurrent + 1;
+            document.getElementById('KittysCurrent').innerHTML = kittysTotal.toFixed(2);
+            document.getElementById('ItemCatTreeNext').innerHTML = Math.round(baseCost * Math.pow(1.15, CatTreesCurrent));        
+        }
+        else
+        {
+            
+        }  
+    }
+    var ItemCatGrassKpS = 100;
+    function itemCatGrassClick()
+    {
+        var kittysTotal = parseFloat(document.getElementById('KittysCurrent').innerHTML);
+        var CatGrasssCurrent = parseFloat(document.getElementById('ItemCatGrassCurrent').innerHTML);
+        var baseCost = parseFloat('40000');
+        var PurchasePrice = parseFloat('0');
+        PurchasePrice = Math.round(baseCost * Math.pow(1.15, CatGrasssCurrent));
+        
+        if (kittysTotal >= PurchasePrice)
+        {
+            kittysTotal = kittysTotal - PurchasePrice;
+            document.getElementById('ItemCatGrassCurrent').innerHTML = CatGrasssCurrent + 1;
+            document.getElementById('KittysCurrent').innerHTML = kittysTotal.toFixed(2);
+            document.getElementById('ItemCatGrassNext').innerHTML = Math.round(baseCost * Math.pow(1.15, CatGrasssCurrent));        
+        }
+        else
+        {
+            
+        }  
+    }
+    var ItemFishingPoleKpS = 400;
+    function itemFishingPoleClick()
+    {
+        var kittysTotal = parseFloat(document.getElementById('KittysCurrent').innerHTML);
+        var FishingPolesCurrent = parseFloat(document.getElementById('ItemFishingPoleCurrent').innerHTML);
+        var baseCost = parseFloat('200000');
+        var PurchasePrice = parseFloat('0');
+        PurchasePrice = Math.round(baseCost * Math.pow(1.15, FishingPolesCurrent));
+        
+        if (kittysTotal >= PurchasePrice)
+        {
+            kittysTotal = kittysTotal - PurchasePrice;
+            document.getElementById('ItemFishingPoleCurrent').innerHTML = FishingPolesCurrent + 1;
+            document.getElementById('KittysCurrent').innerHTML = kittysTotal.toFixed(2);
+            document.getElementById('ItemFishingPoleNext').innerHTML = Math.round(baseCost * Math.pow(1.15, FishingPolesCurrent));        
+        }
+        else
+        {
+            
+        }  
+    }
+    var ItemBirdCageKpS = 6666;
+    function itemBirdCageClick()
+    {
+        var kittysTotal = parseFloat(document.getElementById('KittysCurrent').innerHTML);
+        var BirdCagesCurrent = parseFloat(document.getElementById('ItemBirdCageCurrent').innerHTML);
+        var baseCost = parseFloat('1666666');
+        var PurchasePrice = parseFloat('0');
+        PurchasePrice = Math.round(baseCost * Math.pow(1.15, BirdCagesCurrent));
+        
+        if (kittysTotal >= PurchasePrice)
+        {
+            kittysTotal = kittysTotal - PurchasePrice;
+            document.getElementById('ItemBirdCageCurrent').innerHTML = BirdCagesCurrent + 1;
+            document.getElementById('KittysCurrent').innerHTML = kittysTotal.toFixed(2);
+            document.getElementById('ItemBirdCageNext').innerHTML = Math.round(baseCost * Math.pow(1.15, BirdCagesCurrent));        
+            if (SoundOnOrOff == "On")
+            {
+                var puddycatSound = new Audio('/kcsound/puddycat.mp3');
+                puddycatSound.play();
+            }
+        }
+        else
+        {
+            
+        }  
+    }
+    var ItemFreshFishKpS = 98765;
+    function itemFreshFishClick()
+    {
+        var kittysTotal = parseFloat(document.getElementById('KittysCurrent').innerHTML);
+        var FreshFishsCurrent = parseFloat(document.getElementById('ItemFreshFishCurrent').innerHTML);
+        var baseCost = parseFloat('123456789');
+        var PurchasePrice = parseFloat('0');
+        PurchasePrice = Math.round(baseCost * Math.pow(1.15, FreshFishsCurrent));
+        
+        if (kittysTotal >= PurchasePrice)
+        {
+            kittysTotal = kittysTotal - PurchasePrice;
+            document.getElementById('ItemFreshFishCurrent').innerHTML = FreshFishsCurrent + 1;
+            document.getElementById('KittysCurrent').innerHTML = kittysTotal.toFixed(2);
+            document.getElementById('ItemFreshFishNext').innerHTML = Math.round(baseCost * Math.pow(1.15, FreshFishsCurrent));        
+        }
+        else
+        {
+            
+        }  
+    }
+    var ItemLaserpointerKpS = 999999;
+    function itemLaserpointerClick()
+    {
+        var kittysTotal = parseFloat(document.getElementById('KittysCurrent').innerHTML);
+        var LaserpointersCurrent = parseFloat(document.getElementById('ItemLaserpointerCurrent').innerHTML);
+        var baseCost = parseFloat('3999999999');
+        var PurchasePrice = parseFloat('0');
+        PurchasePrice = Math.round(baseCost * Math.pow(1.15, LaserpointersCurrent));
+        
+        if (kittysTotal >= PurchasePrice)
+        {
+            kittysTotal = kittysTotal - PurchasePrice;
+            document.getElementById('ItemLaserpointerCurrent').innerHTML = LaserpointersCurrent + 1;
+            document.getElementById('KittysCurrent').innerHTML = kittysTotal.toFixed(2);
+            document.getElementById('ItemLaserpointerNext').innerHTML = Math.round(baseCost * Math.pow(1.15, LaserpointersCurrent));        
+        }
+        else
+        {
+            
+        }  
+    }    
+    </script>
+    <div class="navMain">
+      <div class="container" role="navigation">
+        <ul class="nav nav-pills pull-left">
+          <li role="presentation"><a href=/>Home</a></li>
+          <li role="presentation" class="active"><a href="#">Kittyclicker</a></li>
+          <li role="presentation"><a href=/>Updatelog</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="game">
+      <div class="container">
+        <table border="1">
+          <tr>
+            <td valign="top">
+              <table border="2" rules="rows">
+                <tr>
+                  <td colspan="2" ><h1>Kitty Clicker Stats</h1></td>
+                </tr>
+                <tr>
+                  <td>
+                    <p id="KittysCurrent" align="right">0</p>
+                  </td>
+                  <td>
+                    <p><font face="Calibri">Kittys</font></p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <p id="KittysPerSec" align="right">0</p>
+                  </td>
+                  <td>
+                    <p><font face="Calibri">KpS</font></p>
+                  </td>
+                </tr>
+              </table border="2">    
+            </td>
+            <td>
+              <center>
+              <input type="image" onclick="kittyClick()" src="/kcimg/g5864.png" alt="" width="500" height="400">
+              </center>    
+            </td>
+            <td>      
+              <table border="1" rules="rows" cellspacing="10" cellpadding="1" style="background-image:url(/kcimg/itembackground.png)">
+                <tr>
+                  <td colspan="5"><h1>Fancy Items</h1></td>
+                </tr>
+                <tr>
+                  <td>
+                    <p id="ItemSoftHandCurrent">0</p>
+                  </td>
+                  <td>
+                    <p>x</p>
+                  </td>
+                  <td>
+                    <input id="ItemSoftHand" type="image" onclick="itemSoftHandClick()" src="/kcimg/softhand.png" alt="">
+                  </td>
+                  <td>
+                    <p id="ItemSoftHandNext" align="right">15</p>
+                  </td>
+                  <td>
+                    <p>Kittys</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <p id="ItemFeedingBowlCurrent">0</p>
+                  </td>
+                  <td>
+                    <p>x</p>
+                  </td>
+                  <td>
+                    <input id="ItemFeedingBowl" type="image" onclick="itemFeedingBowlClick()" src="/kcimg/feedingbowl.png" alt="">
+                  </td>
+                  <td>
+                    <p id="ItemFeedingBowlNext" align="right">100</p>
+                  </td>
+                  <td>
+                    <p>Kittys</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <p id="ItemWoolBallCurrent">0</p>
+                  </td>
+                  <td>
+                    <p>x</p>
+                  </td>
+                  <td>
+                    <input id="ItemWoolBall" type="image" onclick="itemWoolBallClick()" src="/kcimg/woolball.png" alt="">
+                  </td>
+                  <td>
+                    <p id="ItemWoolBallNext" align="right">500</p>
+                  </td>
+                  <td>
+                    <p>Kittys</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <p id="ItemLitterBoxCurrent">0</p>
+                  </td>
+                  <td>
+                    <p>x</p>
+                  </td>
+                  <td>
+                    <input id="ItemLitterBox" type="image" onclick="itemLitterBoxClick()" src="/kcimg/litterbox.png" alt="">
+                  </td>
+                  <td>
+                    <p id="ItemLitterBoxNext" align="right">3000</p>
+                  </td>
+                  <td>
+                    <p>Kittys</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <p id="ItemCatTreeCurrent">0</p>
+                  </td>
+                  <td>
+                    <p>x</p>
+                  </td>
+                  <td>
+                    <input id="ItemCatTree" type="image" onclick="itemCatTreeClick()" src="/kcimg/cattree.png" alt="">
+                  </td>
+                  <td>
+                    <p id="ItemCatTreeNext" align="right">10000</p>
+                  </td>
+                  <td>
+                    <p>Kittys</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <p id="ItemCatGrassCurrent">0</p>
+                  </td>
+                  <td>
+                    <p>x</p>
+                  </td>
+                  <td>
+                    <input id="ItemCatGrass" type="image" onclick="itemCatGrassClick()" src="/kcimg/catgrass.png" alt="">
+                  </td>
+                  <td>
+                    <p id="ItemCatGrassNext" align="right">40000</p>
+                  </td>
+                  <td>
+                    <p>Kittys</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <p id="ItemFishingPoleCurrent">0</p>
+                  </td>
+                  <td>
+                    <p>x</p>
+                  </td>
+                  <td>
+                    <input id="ItemFishingPole" type="image" onclick="itemFishingPoleClick()" src="/kcimg/fishingpole.png" alt="">
+                  </td>
+                  <td>
+                    <p id="ItemFishingPoleNext" align="right">200000</p>
+                  </td>
+                  <td>
+                    <p>Kittys</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <p id="ItemBirdCageCurrent">0</p>
+                  </td>
+                  <td>
+                    <p>x</p>
+                  </td>
+                  <td>
+                    <input id="ItemBirdCage" type="image" onclick="itemBirdCageClick()" src="/kcimg/birdcage.png" alt="">
+                  </td>
+                  <td>
+                    <p id="ItemBirdCageNext" align="right">1666666</p>
+                  </td>
+                  <td>
+                    <p>Kittys</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <p id="ItemFreshFishCurrent">0</p>
+                  </td>
+                  <td>
+                    <p>x</p>
+                  </td>
+                  <td>
+                    <input id="ItemFreshFish" type="image" onclick="itemFreshFishClick()" src="/kcimg/freshfish.png" alt="">
+                  </td>
+                  <td>
+                    <p id="ItemFreshFishNext" align="right">123456789</p>
+                  </td>
+                  <td>
+                    <p>Kittys</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <p id="ItemLaserpointerCurrent">0</p>
+                  </td>
+                  <td>
+                    <p>x</p>
+                  </td>
+                  <td>
+                    <input id="ItemLaserpointer" type="image" onclick="itemLaserpointerClick()" src="/kcimg/laserpointer.png" alt="">
+                  </td>
+                  <td>
+                    <p id="ItemLaserpointerNext" align="right">3999999999</p>
+                  </td>
+                  <td>
+                    <p>Kittys</p>
+                  </td>
+                </tr>
+              </table>    
+            </td>
+          </tr>
+          <tr>
+            <td valign="top">
+              <h1>Menu</h1>
+              <div class="Menu">
+                <input class="myButton" id="BtSave" type="button" onclick="SaveGame()" value="Save"><br>
+                <input class="myButton" id="BtLoad" type="button" onclick="LoadGame()" value="Load"><br>
+                <input class="myButton" id="BtSound" type="button" onclick="ToogleSound()" value="Sound">
+              </div>
+            </td>
+            <td valign="top">
+              <h1>Donation for more Cool Kitty Content</h1>
+              <h3>Help us to improve Kitty Clicker!</h3>
+              <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+              <input type="hidden" name="cmd" value="_s-xclick">
+              <input type="hidden" name="hosted_button_id" value="YQS6W9UHPKZMQ">
+              <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+              <img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
+              </form>
+            </td>
+            <td valign="top">
+              <h1>Shiny Upgrades (Coming "soon")</h1>
+              <table id="TableUpgrades">
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
