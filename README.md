@@ -1,2 +1,2 @@
-# Kittyclicker
-A clicker clone with kitties!
+# Kittyclicker MaterialV2
+A KittyClicker Clone (credits to Creaser)
